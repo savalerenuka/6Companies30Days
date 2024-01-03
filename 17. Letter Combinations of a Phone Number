@@ -1,0 +1,26 @@
+class Solution {
+    private String[] digit_map = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    private void backtrack(String curr, String digits, int index, List<String> result){
+        if(index == digits.length()){
+            result.add(curr);
+            return;
+        }
+
+        char digit = digits.charAt(index);
+        String letters = digit_map[digit - '0'];
+
+        for(char letter: letters.toCharArray()){
+            backtrack(curr + letter, digits, index + 1, result);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if(digits.length() == 0){
+            return result;
+        }
+
+        backtrack("", digits, 0, result);
+        return result;
+    }
+}
