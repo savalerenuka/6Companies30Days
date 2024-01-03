@@ -1,0 +1,48 @@
+class Solution {
+   private class Pair{
+       int index;
+       String val;
+       Pair(int index, String val){
+           this.index = index;
+           this.val = val;
+       }
+   }
+
+public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
+
+     HashMap<Integer, Pair[]> map = new HashMap<>();
+        int[] ans = new int[queries.length];
+        int originalLen = nums[0].length();
+
+        for (int i = 0; i < queries.length; i++) {
+            int k = queries[i][0];
+            int trim = queries[i][1];
+
+            Pair[] arr;
+
+            // Check if the map already contains the specified trim value
+            if (!map.containsKey(trim)) {
+                arr = new Pair[nums.length];
+
+                // Create an array of pairs (index, trimmed value) for the current trim value
+                for (int j = 0; j < nums.length; j++) {
+                    String trimmedVal = nums[j].substring(originalLen - trim);
+                    arr[j] = new Pair(j, trimmedVal);
+                }
+
+                // Sort the array of pairs based on the trimmed value
+                Arrays.sort(arr, (a, b) -> a.val.compareTo(b.val));
+                
+                // Add the sorted array of pairs to the map with the trim value as the key
+                map.put(trim, arr);
+            } else {
+                arr = map.get(trim);
+            }
+
+            // Retrieve the index from the sorted array based on the query and store it in the result array
+            ans[i] = arr[k - 1].index;
+        }
+
+        return ans;
+    }
+}
