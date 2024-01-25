@@ -1,0 +1,39 @@
+class Solution {
+    private int maxS = 0;
+    private class NodePair{
+        int min, max, sum;
+    }
+
+    private NodePair getMax(TreeNode root){
+        if(root == null){
+            NodePair n = new NodePair();
+            n.min = Integer.MAX_VALUE;
+            n.max = Integer.MIN_VALUE;
+            n.sum = 0;
+            return n;
+        }
+
+        NodePair main = new NodePair();
+        NodePair left = getMax(root.left);
+        NodePair right = getMax(root.right);
+
+        if(left.max<root.val && right.min>root.val){
+            main.min = Math.min(root.val, Math.min(left.min, right.min));
+            main.max = Math.max(root.val, Math.max(left.max, right.max));
+            main.sum = root.val + left.sum + right.sum;
+            maxS = Math.max(maxS, main.sum);
+        }else{
+            main.min = Integer.MIN_VALUE;
+            main.max = Integer.MAX_VALUE;
+            main.sum = Math.max(left.sum, right.sum);
+        }
+
+        return main;
+    }
+    public int maxSumBST(TreeNode root) {
+        NodePair temp = new NodePair();
+        temp = getMax(root);
+        
+        return maxS > 0 ? maxS : 0;
+    }
+}
