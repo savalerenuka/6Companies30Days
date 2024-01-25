@@ -1,0 +1,25 @@
+class Solution {
+    public int countDistinct(int[] nums, int k, int p) {
+        HashSet<List<Integer>> distinctsubarr = new HashSet<>();
+       
+        for(int i=0; i<nums.length; i++) {
+        	int st = i;
+        	for(int j=i; j<nums.length; j++) {
+        		int end = j;
+        		List<Integer> list = new ArrayList<>();
+        		int cnt = 0;
+        		for(int m=st; m <= end; m++) {
+        			list.add(nums[m]);
+        			if(nums[m]%p == 0) {
+        				cnt++;
+        			}   
+        		}
+        		if(cnt <= k) {
+    				distinctsubarr.add(list);	
+    			}
+        	}
+        }
+         return distinctsubarr.size();
+        
+    }
+}
