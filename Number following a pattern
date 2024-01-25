@@ -1,0 +1,38 @@
+class Solution{
+    static String printMinNumberForPattern(String pattern){
+       int n = pattern.length();
+        String result = "";
+        Stack<Integer> stack = new Stack<>();
+        int vacantPlacCnt = 0, digit = 0, sz = 1;
+        stack.push(0);
+        
+        for(int i=0; i<n; i++) {
+        	if(pattern.charAt(i) == 'I') {
+        		vacantPlacCnt = vacantPlacCnt + sz;
+        		digit = vacantPlacCnt;
+        		while(sz > 0) {
+        			result += (char)(digit + '0');
+        			digit--;
+        			sz--;
+        		}
+        		stack.push(i);
+        		sz++;
+        	}else {
+        		stack.push(i);
+        		sz++;
+        	}
+        }
+        
+        vacantPlacCnt = vacantPlacCnt + sz;
+        digit = vacantPlacCnt;
+        while(sz > 0) {
+			result += (char)(digit + '0');
+			digit--;
+			sz--;
+		}
+
+        return result;
+       
+       
+    }
+}
